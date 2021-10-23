@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const expressValidator = require('express-validator')
 require('dotenv').config();
-
+const fs = require('fs')
 const cookiePerser = require('cookie-parser')
 const cors = require("cors")
 const app = express();
