@@ -26,7 +26,7 @@ exports.noteById = (req, res, next, id) => {
 
 exports.noteByUserId = (req, res) => {
     Note.find({ postedBy: req.profile._id })
-        .populate("postedBy", "_id name")
+        //.populate("postedBy")
         .sort("_created")
         .exec((err, notes) => {
             if (err) {
@@ -43,6 +43,7 @@ exports.createNote = async (req, res) => {
     const newNote = new Note({
         title: req.body.title,
         description: req.body.description,
+        postedBy: req.profile._id
 
     })
     try {
