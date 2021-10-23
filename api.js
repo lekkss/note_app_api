@@ -43,6 +43,21 @@ app.use('/', notes);
 app.use('/', user);
 app.use('/', auth);
 
+//apiDocs
+app.get("/", (req, res) => {
+    fs.readFile('docs/apiDocs.json', (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: err
+            })
+        }
+        const docs = JSON.parse(data)
+        res.json(docs)
+    }
+    )
+})
+
+
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({
