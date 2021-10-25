@@ -56,6 +56,14 @@ exports.userSignUpValidator = (req, res, next) => {
         .matches(/\d/)
         .withMessage("Password must contail at least a number")
 
+    //check confirm password
+    req.check("confirmPassword").custom((value, { req }) => {
+        if (value !== req.body.password) {
+            throw new Error("Password does not match");
+        }
+        return true;
+    })
+
     //check other errors
     const errors = req.validationErrors()
 
@@ -69,6 +77,5 @@ exports.userSignUpValidator = (req, res, next) => {
     //proceed
 
     next();
-
 
 }
