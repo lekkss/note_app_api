@@ -12,7 +12,7 @@ router.post("/note/new/:userId", requireSignin, createNote, createPostValidator)
 router.get("/note/by/:userId", requireSignin, noteByUserId)
 router.delete("/note/:noteId", requireSignin, isPoster, deleteNote)
 
-//router.put("/note/:noteId", requireSignin, isPoster, updatePost)
+router.put("/note/:noteId", requireSignin, isPoster, updatePost)
 
 //any routh containind userId, app will first execute userById()
 router.param("userId", userById);

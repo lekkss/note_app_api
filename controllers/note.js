@@ -70,6 +70,20 @@ exports.isPoster = (req, res, next) => {
     next();
 }
 
+exports.updateNote = (req, res, next) => {
+    let post = req.post
+    post = _.extend(post, req.body)
+    post.update = Date.now()
+    post.save((err, post) => {
+        if (err) {
+            return res.status(400).json({
+                error: err
+            })
+        }
+        res.json(post)
+    })
+}
+
 
 exports.deleteNote = (req, res) => {
     let note = req.note
