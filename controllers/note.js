@@ -6,8 +6,8 @@ const _ = require('lodash');
 
 exports.getNotes = (req, res) => {
     const notes = Note.find()
-        .populate("postedBy", "_id, name")
-        .select("_id title description")
+        //.populate("postedBy", "_id, name")
+        .select("_id title description postedBy ")
         .sort({ date: -1 })
         .then(notes => { res.status(200).json(notes) })
         .catch(err => console.log(err));
@@ -15,7 +15,7 @@ exports.getNotes = (req, res) => {
 
 exports.noteById = (req, res, next, id) => {
     Note.findById(id)
-        .populate("postedBy", "_id, name")
+        //.populate("postedBy", "_id, name")
         .exec((err, note) => {
             if (err || !note) {
                 return res.status(400).json({
@@ -74,16 +74,16 @@ exports.isPoster = (req, res, next) => {
 }
 
 exports.updateNote = (req, res, next) => {
-    let post = req.post
-    post = _.extend(post, req.body)
-    post.update = Date.now()
-    post.save((err, post) => {
+    let note = req.note
+    note = _.extend(note, req.body)
+    note.update = Date.now()
+    note.save((err, note) => {
         if (err) {
             return res.status(400).json({
                 error: err
             })
         }
-        res.json(post)
+        res.json(note)
     })
 }
 
