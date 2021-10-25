@@ -11,6 +11,14 @@ exports.signup = async (req, res) => {
             error: "Email is Taken"
         })
     }
+    // const confirmPassword = await User.findOne({
+    //     confirmPassword: req.body.confirmPassword
+    // })
+    // if (confirmPassword !== req.body.password) {
+    //     returnres.status(403).json({
+    //         error: "password do not match"
+    //     })
+    // }
 
     const user = await new User(req.body);
     await user.save()

@@ -44,13 +44,14 @@ userSchema.virtual("password")
     })
 
 //confirmPassword
-userSchema.virtual("confirmPassword")
-    .get(function () {
-        return this._confirmPassword;
-    })
-    .set(function (confirmPassword) {
-        this._confirmPassword = confirmPassword
-    })
+// userSchema.virtual("confirmPassword")
+
+//     .set(function (confirmPassword) {
+//         this._confirmPassword = confirmPassword
+//     })
+//     .get(function () {
+//         return this._confirmPassword;
+//     })
 
 //methods
 
