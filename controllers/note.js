@@ -1,6 +1,9 @@
 
 const Note = require("../models/note");
 
+const _ = require('lodash');
+
+
 exports.getNotes = (req, res) => {
     const notes = Note.find()
         .populate("postedBy", "_id, name")
