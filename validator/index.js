@@ -57,13 +57,8 @@ exports.userSignUpValidator = (req, res, next) => {
         .withMessage("Password must contail at least a number")
 
     //check confirm password
-    //req.check("confirmPassword", "ConfirmPassword is required")
-    // req.check("confirmPassword").custom((value, { req }) => {
-    //     if (value !== req.body.password) {
-    //         throw new Error("Password does not match");
-    //     }
-    //     return true;
-    // })
+    req.check("confirmPassword", "ConfirmPassword is required").notEmpty()
+
 
     //check other errors
     const errors = req.validationErrors()

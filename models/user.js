@@ -19,7 +19,12 @@ const userSchema = mongoose.Schema({
         type: String,
         require: true,
     },
+    hash_confirmPassword: {
+        type: String,
+        require: true
+    },
     salt: String,
+    saltConfirmPassword: String,
     created: {
         type: Date,
         default: Date.now
@@ -43,15 +48,24 @@ userSchema.virtual("password")
         return this._password
     })
 
-//confirmPassword
-// userSchema.virtual("confirmPassword")
 
-//     .set(function (confirmPassword) {
-//         this._confirmPassword = confirmPassword
-//     })
-//     .get(function () {
-//         return this._confirmPassword;
-//     })
+//Confirm
+userSchema.virtual("confirmPassword")
+    .set(function (confirmPassword) {
+        //create temp variable _password
+        this._confirmPassword = confirmPassword;
+
+        //generate tmestamp and install uuid
+        this.saltConfirmPassword = uuidv4()
+
+        //encrypt password
+        this.hash_confirmPassword = this.encryptConfirmPassword(confirmPassword)
+    })
+    .get(function () {
+        return this._confirmPassword
+    })
+
+
 
 //methods
 
@@ -71,8 +85,27 @@ userSchema.methods = {
         catch (err) {
             return ""
         }
+    },
+
+    //confirmPassword
+    // authenticateConfirm: function (plainT) {
+    //     return this.encryptPassword(plainT) === this.hash_confirmPassword;
+    // },
+    encryptConfirmPassword: function (confirmPassword) {
+        if (!confirmPassword) {
+            return ''
+        }
+        try {
+            return crypto.createHmac('sha1', this.salt)
+                .update(confirmPassword)
+                .digest('hex')
+        }
+        catch (err) {
+            return ""
+        }
     }
 },
+
 
 
     module.exports = mongoose.model("User", userSchema);
